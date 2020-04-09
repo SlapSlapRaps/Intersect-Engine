@@ -105,10 +105,4 @@ Third-party libraries used by Intersect are under their own licenses.  Please re
 
 
 
-
-
-
-
-
-
-I LOVE MICHELLE OBAMA
+fjhkihsfgisrgsdrkolgjsdrgksdrgldljgmdogdgkljodrg
