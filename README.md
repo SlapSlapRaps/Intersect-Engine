@@ -94,3 +94,21 @@ Third-party libraries used by Intersect are under their own licenses.  Please re
  * The [official documentation](https://docs.freemmorpgmaker.com) is on our website.
  * The official [Intersect Assets](https://github.com/AscensionGameDev/Intersect-Assets) repo is separate and can be found on GitHub.
  * Download stable and development [installers and packages](https://freemmorpgmaker.com/download).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+I LOVE MICHELLE OBAMA
