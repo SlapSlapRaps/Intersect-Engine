@@ -78,34 +78,23 @@ namespace Intersect.Editor.Maps
             }
         }
 
-        [CustomCategory("general"), CustomDescription("maptypedesc"), CustomDisplayName("maptype"),
-         DefaultValue("None"), TypeConverter(typeof(MapTypeProperty)), Browsable(true)]
-        public string mapType
+        [CustomCategory("general"), CustomDescription("zonedesc"), CustomDisplayName("zonetype"),
+         DefaultValue("Normal"), TypeConverter(typeof(MapZoneProperty)), Browsable(true)]
+        public string ZoneType
         {
-            get
-            {
-                if (mMyMap.MapType == Guid.Empty)
-                {
-                    return "None";
-                }
-                return MapType.GetName(mMyMap.MapType);
-            }
+            get => Strings.MapProperties.zones[(int) mMyMap.ZoneType];
             set
             {
-                var maptypes = new Dictionary<string, Guid>();
-                maptypes.Add("None", Guid.Empty);
-                foreach (var itm in MapType.ItemPairs)
+                Globals.MapEditorWindow.PrepUndoState();
+                for (byte i = 0; i < Enum.GetNames(typeof(MapZones)).Length; i++)
                 {
-                    maptypes.Add(itm.Value, itm.Key);
+                    if (Strings.MapProperties.zones[i] == value)
+                    {
+                        mMyMap.ZoneType = (MapZones) i;
+                    }
                 }
-                Guid wantedValue;
-                maptypes.TryGetValue(value, out wantedValue);
-                if (mMyMap.MapType != wantedValue)
-                {
-                    Globals.MapEditorWindow.PrepUndoState();
-                    mMyMap.MapType = wantedValue;
-                    Globals.MapEditorWindow.AddUndoState();
-                }
+
+                Globals.MapEditorWindow.AddUndoState();
             }
         }
 
@@ -623,36 +612,6 @@ namespace Intersect.Editor.Maps
             soundList.AddRange(GameContentManager.SmartSortedSoundNames);
 
             return new StandardValuesCollection(soundList.ToArray());
-        }
-
-    }
-
-    public class MapTypeProperty : StringConverter
-    {
-
-        public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
-        {
-            //true means show a combobox
-            return true;
-        }
-
-        public override bool GetStandardValuesExclusive(ITypeDescriptorContext context)
-        {
-            //true will limit to list. false will show the list, 
-            //but allow free-form entry
-            return false;
-        }
-
-        public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
-        {
-            var maptypelist = new List<string>
-            {
-                Strings.General.none
-            };
-
-            maptypelist.AddRange(MapType.Names);
-
-            return new StandardValuesCollection(maptypelist.ToArray());
         }
 
     }

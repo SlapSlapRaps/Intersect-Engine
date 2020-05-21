@@ -7,7 +7,6 @@ using Intersect.Config;
 using Intersect.GameObjects;
 using Intersect.GameObjects.Crafting;
 using Intersect.GameObjects.Events;
-using Intersect.GameObjects.Maps;
 using Intersect.GameObjects.Maps.MapList;
 using Intersect.Server.Database.GameData.Migrations;
 using Intersect.Server.Maps;
@@ -95,9 +94,6 @@ namespace Intersect.Server.Database.GameData
 
         //Time
         public DbSet<TimeBase> Time { get; set; }
-
-        // Map Types
-        public DbSet<MapType> MapType { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

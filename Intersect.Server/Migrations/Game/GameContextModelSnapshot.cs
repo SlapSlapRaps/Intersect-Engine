@@ -318,34 +318,6 @@ namespace Intersect.Server.Migrations.Game
                     b.ToTable("MapFolders");
                 });
 
-            modelBuilder.Entity("Intersect.GameObjects.Maps.MapType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("CanAttackNpcs");
-
-                    b.Property<bool>("CanAttackPlayers");
-
-                    b.Property<bool>("CanTrade");
-
-                    b.Property<bool>("DropItemsOnDeath");
-
-                    b.Property<bool>("IsArena");
-
-                    b.Property<string>("MapNameColor");
-
-                    b.Property<string>("Name");
-
-                    b.Property<long>("TimeCreated");
-
-                    b.Property<bool>("WalkThroughPlayers");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MapType");
-                });
-
             modelBuilder.Entity("Intersect.GameObjects.NpcBase", b =>
                 {
                     b.Property<Guid>("Id")
@@ -759,8 +731,6 @@ namespace Intersect.Server.Migrations.Game
 
                     b.Property<string>("LightsJson")
                         .HasColumnName("Lights");
-
-                    b.Property<Guid>("MapType");
 
                     b.Property<string>("Music");
 

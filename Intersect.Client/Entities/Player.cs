@@ -1805,14 +1805,11 @@ namespace Intersect.Client.Entities
                                 {
                                     //Return the entity key as this should block the player.  Only exception is if the MapZone this entity is on is passable.
                                     var entityMap = MapInstance.Get(en.Value.CurrentMap);
-                                   if (entityMap.MapType != Guid.Empty)
-                                      {                                      
-                                        if (MapType.Get(entityMap.MapType).WalkThroughPlayers)
-                                        {
-                                            continue;
-                                        }
-                                      }                                   
-                                 }
+                                    if (Options.Instance.Passability.Passable[(int)entityMap.ZoneType])
+                                    {
+                                        continue;
+                                    }
+                                }
 
                                 blockedBy = en.Value;
 

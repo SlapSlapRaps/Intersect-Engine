@@ -3289,7 +3289,7 @@ Tick timer saved in server config.json.";
                 {"playerlightsize", @"Player Light Size"},
                 {"rhue", @"RHue"},
                 {"sound", @"Sound"},
-                {"maptype", @"Map Type"},
+                {"zonetype", @"Zone Type"},
                 {"weather", @"Weather"},
                 {"weatherxspeed", @"Weather X Speed"},
                 {"weatheryspeed", @"Weather Y Speed"},
@@ -3326,7 +3326,7 @@ Tick timer saved in server config.json.";
                 {"playerlightsizedesc", @"How large is the light around the player? (In pixels 0-1000)"},
                 {"rhuedesc", @"The amount of red in the overlay. (Range: 0 to 255)"},
                 {"sounddesc", @"Looping sound effect for this map."},
-                {"maptypedesc", @"The type of map this is."},
+                {"zonedesc", @"The type of map this is."},
                 {"weatherdesc", @"The animation for each weather particle."},
                 {
                     "weatherxspeeddesc",

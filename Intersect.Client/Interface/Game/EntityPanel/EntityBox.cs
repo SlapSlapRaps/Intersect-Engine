@@ -14,7 +14,6 @@ using Intersect.Client.Localization;
 using Intersect.Client.Networking;
 using Intersect.Enums;
 using Intersect.GameObjects;
-using Intersect.GameObjects.Maps;
 using Intersect.Logging;
 
 using JetBrains.Annotations;
@@ -462,60 +461,11 @@ namespace Intersect.Client.Interface.Game.EntityPanel
         {
             if (Globals.Me.MapInstance != null)
             {
-                EntityMap.SetTextColor(GetMapNameColor(), Framework.Gwen.Control.Label.ControlState.Normal);
                 EntityMap.SetText(Strings.EntityBox.map.ToString(Globals.Me.MapInstance.Name));
-                EntityMap.Redraw();
             }
             else
             {
                 EntityMap.SetText(Strings.EntityBox.map.ToString(""));
-            }
-        }
-
-        private Color GetMapNameColor()
-        {
-            if (Globals.Me.MapInstance.MapType == Guid.Empty) { return Color.White; }
-            switch (MapType.Get(Globals.Me.MapInstance.MapType).MapNameColor)
-            {
-                case "White":
-                    return Color.White;
-                    break;
-
-                case "Red":
-                    return Color.Red;
-                    break;
-
-                case "Green":
-                    return new Color(0,128, 0);
-                    break;
-
-                case "Blue":
-                    return Color.Blue;
-                    break;
-
-                case "Cyan":
-                    return Color.Cyan;
-                    break;
-
-                case "Orange":
-                    return Color.Orange;
-                    break;
-
-                case "Lime":
-                    return Color.Green;
-                    break;
-
-                case "Purple":
-                    return new Color(128, 0, 128);
-                    break;
-
-                case "Black":
-                    return Color.Black;
-                    break;
-
-                default:
-                    return Color.White;
-                    break;
             }
         }
 

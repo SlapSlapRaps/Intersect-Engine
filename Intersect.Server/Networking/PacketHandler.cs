@@ -2743,9 +2743,6 @@ namespace Intersect.Server.Networking
                     break;
                 case GameObjectType.Time:
                     break;
-                case GameObjectType.MapType:
-                    obj = MapType.Get(id);
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -2847,9 +2844,6 @@ namespace Intersect.Server.Networking
                 case GameObjectType.Tileset:
                     break;
                 case GameObjectType.Time:
-                    break;
-                case GameObjectType.MapType:
-                    obj = MapType.Get(id);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

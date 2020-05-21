@@ -71,8 +71,6 @@ namespace Intersect.Editor.Forms
 
         private FrmTime mTimeEditor;
 
-        private FrmMapType mMapTypeEditor;
-
         //General Editting Variables
         bool mTMouseDown;
 
@@ -1587,16 +1585,6 @@ namespace Intersect.Editor.Forms
                         }
 
                         break;
-
-                    case GameObjectType.MapType:
-                        if (mMapTypeEditor == null || mMapTypeEditor.Visible == false)
-                        {
-                            mMapTypeEditor = new FrmMapType();
-                            mMapTypeEditor.InitEditor();
-                            mMapTypeEditor.Show();
-                        }
-
-                        break;
                     default:
                         return;
                 }
@@ -1749,10 +1737,6 @@ namespace Intersect.Editor.Forms
             Globals.PackingProgressForm.NotifyClose();
         }
 
-        private void mapTypeEditorToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            PacketSender.SendOpenEditor(GameObjectType.MapType);
-        }
     }
 
 }

@@ -516,20 +516,6 @@ namespace Intersect.Editor.Networking
                     }
 
                     break;
-
-                case GameObjectType.MapType:
-                    if (deleted)
-                    {
-                        var itm = MapType.Get(id);
-                        itm.Delete();
-                    }
-                    else
-                    {
-                        var itm = new MapType(id);
-                        itm.Load(json);
-                        MapType.Lookup.Set(id, itm);
-                    }
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
