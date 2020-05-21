@@ -407,10 +407,21 @@ namespace Intersect.Server.Entities
                             if (this is Player)
                             {
                                 //Check if this target player is passable....
-                                if (!Options.Instance.Passability.Passable[(int) targetMap.ZoneType])
+                                if (targetMap.MapType != Guid.Empty)
                                 {
-                                    return (int) EntityTypes.Player;
+                                    if (!MapType.Get(targetMap.MapType).WalkThroughPlayers)
+                                    {
+                                        return (int)EntityTypes.Player;
+                                    }
                                 }
+                                else
+                                {
+                                    return (int)EntityTypes.Player;
+                                }
+                                   // if (!Options.Instance.Passability.Passable[(int) targetMap.ZoneType])
+                               // {
+                                //    return (int) EntityTypes.Player;
+                                //}
                             }
                             else
                             {
@@ -1377,12 +1388,26 @@ namespace Intersect.Server.Entities
                     }
                 }
 
-                if (MapInstance.Get(MapId).ZoneType == MapZones.Safe)
+                if (MapInstance.Get(MapId).MapType != Guid.Empty)
+                {
+                    if (!MapType.Get(MapInstance.Get(MapId).MapType).CanAttackPlayers)
+                    {
+                        return;
+                    }
+                }
+                else
                 {
                     return;
                 }
 
-                if (MapInstance.Get(target.MapId).ZoneType == MapZones.Safe)
+                if (MapInstance.Get(target.MapId).MapType != Guid.Empty)
+                {
+                    if (!MapType.Get(MapInstance.Get(target.MapId).MapType).CanAttackPlayers)
+                    {
+                        return;
+                    }
+                }
+                else
                 {
                     return;
                 }
@@ -1390,6 +1415,24 @@ namespace Intersect.Server.Entities
                 if (player.InParty(targetPlayer))
                 {
                     return;
+                }
+            }
+
+            if (this is Player && target is Npc)
+            {
+                if (MapInstance.Get(MapId).MapType != Guid.Empty)
+                {
+                    if (!MapType.Get(MapInstance.Get(MapId).MapType).CanAttackNpcs)
+                    {
+                        return;
+                    }
+                }
+                if (MapInstance.Get(target.MapId).MapType != Guid.Empty)
+                {
+                    if (!MapType.Get(MapInstance.Get(target.MapId).MapType).CanAttackNpcs)
+                    {
+                        return;
+                    }
                 }
             }
 
@@ -1485,6 +1528,25 @@ namespace Intersect.Server.Entities
                     return;
                 }
 
+                // New Check for Attacking Npcs
+                if (target is Npc && this is Player)
+                {
+                    if (MapInstance.Get(MapId).MapType != Guid.Empty)
+                    {
+                        if (!MapType.Get(MapInstance.Get(MapId).MapType).CanAttackNpcs)
+                        {
+                            return;
+                        }
+                    }
+                    if (MapInstance.Get(MapId).MapType != Guid.Empty)
+                    {
+                        if (!MapType.Get(MapInstance.Get(target.MapId).MapType).CanAttackNpcs)
+                        {
+                            return;
+                        }
+                    }
+                }
+
                 //Check for parties and safe zones, friendly fire off (unless its healing)
                 if (target is Npc && this is Npc npc)
                 {
@@ -1502,12 +1564,25 @@ namespace Intersect.Server.Entities
                     }
 
                     // Check if either the attacker or the defender is in a "safe zone" (Only apply if combat is PVP)
-                    if (MapInstance.Get(MapId).ZoneType == MapZones.Safe)
+                    if (MapInstance.Get(MapId).MapType != Guid.Empty)
+                    {
+                        if (!MapType.Get(MapInstance.Get(MapId).MapType).CanAttackPlayers)
+                        {
+                            return;
+                        }
+                    }
+                    else
                     {
                         return;
                     }
-
-                    if (MapInstance.Get(target.MapId).ZoneType == MapZones.Safe)
+                    if (MapInstance.Get(target.MapId).MapType != Guid.Empty)
+                    {
+                        if (!MapType.Get(MapInstance.Get(target.MapId).MapType).CanAttackPlayers)
+                        {
+                            return;
+                        }
+                    }
+                    else
                     {
                         return;
                     }
@@ -1692,13 +1767,38 @@ namespace Intersect.Server.Entities
                         targetPlayer.StartCommonEvent(evt, CommonEventTrigger.PlayerInteract, "", this.Name);
                     }
                 }
-
-                if (MapInstance.Get(MapId)?.ZoneType == MapZones.Safe)
+                if (MapInstance.Get(MapId).MapType != Guid.Empty)
+                {
+                    if (!MapType.Get(MapInstance.Get(MapId).MapType).CanAttackPlayers)
+                    {
+                        return;
+                    }
+                }
+                else
                 {
                     return;
                 }
 
-                if (MapInstance.Get(target.MapId)?.ZoneType == MapZones.Safe)
+                if (MapInstance.Get(target.MapId).MapType != Guid.Empty)
+                {
+                    if (!MapType.Get(MapInstance.Get(target.MapId).MapType).CanAttackPlayers)
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            if (target is Npc && this is Player)
+            {
+                if (!MapType.Get(MapInstance.Get(MapId).MapType).CanAttackNpcs)
+                {
+                    return;
+                }
+                if (!MapType.Get(MapInstance.Get(target.MapId).MapType).CanAttackNpcs)
                 {
                     return;
                 }
@@ -1973,14 +2073,28 @@ namespace Intersect.Server.Entities
                     //PVP Kill common events
                     if (this.GetType() == typeof(Player))
                     {
-                        if (MapInstance.Get(MapId).ZoneType != MapZones.Arena)
+                        if (MapInstance.Get(MapId).MapType != Guid.Empty)
+                        {
+                            if (!MapType.Get(MapInstance.Get(MapId).MapType).IsArena)
+                            {
+                                foreach (EventBase evt in EventBase.Lookup.Values)
+                                {
+                                    if (evt != null)
+                                    {
+                                        ((Player)this).StartCommonEvent(evt, CommonEventTrigger.PVPKill, "", enemy.Name);
+                                        ((Player)enemy).StartCommonEvent(evt, CommonEventTrigger.PVPDeath, "", this.Name);
+                                    }
+                                }
+                            }
+                        }
+                        else
                         {
                             foreach (EventBase evt in EventBase.Lookup.Values)
                             {
                                 if (evt != null)
                                 {
-                                    ((Player) this).StartCommonEvent(evt, CommonEventTrigger.PVPKill, "", enemy.Name);
-                                    ((Player) enemy).StartCommonEvent(evt, CommonEventTrigger.PVPDeath, "", this.Name);
+                                    ((Player)this).StartCommonEvent(evt, CommonEventTrigger.PVPKill, "", enemy.Name);
+                                    ((Player)enemy).StartCommonEvent(evt, CommonEventTrigger.PVPDeath, "", this.Name);
                                 }
                             }
                         }

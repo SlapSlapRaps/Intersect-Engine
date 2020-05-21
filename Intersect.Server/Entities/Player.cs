@@ -719,8 +719,21 @@ namespace Intersect.Server.Entities
             {
                 evt.Value.PlayerHasDied = true;
             }
-
-            base.Die(dropitems, killer);
+            if (MapInstance.Get(MapId).MapType != Guid.Empty)
+            {
+                if (MapType.Get(MapInstance.Get(this.MapId).MapType).DropItemsOnDeath)
+                {
+                    base.Die(dropitems, killer);
+                }
+                else
+                {
+                    base.Die(0, killer);
+                }
+            }
+            else
+            {
+                base.Die(dropitems, killer);
+            }
             PacketSender.SendEntityDie(this);
             Reset();
             Respawn();
@@ -3749,6 +3762,15 @@ namespace Intersect.Server.Entities
             {
                 return;
             }
+
+            if (MapInstance.Get(this.MapId).MapType != Guid.Empty && MapInstance.Get(target.MapId).MapType != Guid.Empty)
+            {
+                if (!MapType.Get(MapInstance.Get(this.MapId).MapType).CanTrade || !MapType.Get(MapInstance.Get(target.MapId).MapType).CanTrade)
+                {
+                    return;
+                }
+            }
+            
 
             // Set the status of both players to be in a trade
             Trading.Counterparty = target;

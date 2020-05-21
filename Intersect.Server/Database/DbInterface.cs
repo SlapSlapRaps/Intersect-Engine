@@ -673,6 +673,9 @@ namespace Intersect.Server.Database
                     break;
                 case GameObjectType.Time:
                     break;
+                case GameObjectType.MapType:
+                    MapType.Lookup.Clear();
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -800,6 +803,12 @@ namespace Intersect.Server.Database
                         break;
                     case GameObjectType.Time:
                         break;
+                    case GameObjectType.MapType:
+                        foreach (var mpt in sGameDb.MapType)
+                        {
+                            MapType.Lookup.Set(mpt.Id, mpt);
+                        }
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(gameObjectType), gameObjectType, null);
                 }
@@ -882,6 +891,10 @@ namespace Intersect.Server.Database
 
                     break;
                 case GameObjectType.Time:
+                    break;
+
+                case GameObjectType.MapType:
+                    dbObj = new MapType(predefinedid);
                     break;
 
                 case GameObjectType.Quest:
@@ -1010,6 +1023,12 @@ namespace Intersect.Server.Database
                     case GameObjectType.Time:
                         break;
 
+                    case GameObjectType.MapType:
+                        sGameDb.MapType.Add((MapType)dbObj);
+                        MapType.Lookup.Set(dbObj.Id, dbObj);
+
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(gameObjectType), gameObjectType, null);
                 }
@@ -1117,6 +1136,10 @@ namespace Intersect.Server.Database
 
                         break;
                     case GameObjectType.Time:
+                        break;
+                    case GameObjectType.MapType:
+                        sGameDb.MapType.Remove((MapType)gameObject);
+
                         break;
                 }
 

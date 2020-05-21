@@ -50,6 +50,15 @@ namespace Intersect.Editor.Forms.DockingElements
             return gridMapProperties.SelectedGridItem;
         }
 
+        private void gridMapProperties_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void FrmMapProperties_Load(object sender, System.EventArgs e)
+        {
+
+        }
     }
 
 }

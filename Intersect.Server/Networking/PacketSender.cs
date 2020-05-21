@@ -8,6 +8,7 @@ using Intersect.Enums;
 using Intersect.GameObjects;
 using Intersect.GameObjects.Crafting;
 using Intersect.GameObjects.Events;
+using Intersect.GameObjects.Maps;
 using Intersect.GameObjects.Maps.MapList;
 using Intersect.Logging;
 using Intersect.Models;
@@ -1472,6 +1473,12 @@ namespace Intersect.Server.Networking
 
                     break;
                 case GameObjectType.Time:
+                    break;
+                case GameObjectType.MapType:
+                    foreach (var obj in MapType.Lookup)
+                    {
+                        SendGameObject(client, obj.Value, false, false, packetList);
+                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

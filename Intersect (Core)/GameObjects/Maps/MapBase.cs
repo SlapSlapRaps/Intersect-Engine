@@ -302,6 +302,11 @@ namespace Intersect.GameObjects.Maps
 
         public MapZones ZoneType { get; set; } = MapZones.Normal;
 
+        // 19 11 25 //
+        // We'll need to just ignore that var unfortunately. Cause this is caveman shit apparently
+        public Guid MapType { get; set; } = Guid.Empty;
+        // Map Type will be our customizable var. Checks will be like so: if getmaptype(#).allowspvp etc
+
         public int PlayerLightSize { get; set; } = 300;
 
         public byte PlayerLightIntensity { get; set; } = 255;

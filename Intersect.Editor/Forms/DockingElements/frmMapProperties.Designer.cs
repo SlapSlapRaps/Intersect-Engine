@@ -55,8 +55,9 @@
             this.gridMapProperties.ViewBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             this.gridMapProperties.ViewBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.gridMapProperties.ViewForeColor = System.Drawing.Color.Gainsboro;
+            this.gridMapProperties.Click += new System.EventHandler(this.gridMapProperties_Click);
             // 
-            // frmMapProperties
+            // FrmMapProperties
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -68,6 +69,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmMapProperties";
             this.Text = "Map Properties";
+            this.Load += new System.EventHandler(this.FrmMapProperties_Load);
             this.ResumeLayout(false);
 
         }
